@@ -1,0 +1,9 @@
+# .gitignore
+.gradle/
+.idea/
+build/
+out/
+*.iml
+*.log
+*.class
+.DS_Store
