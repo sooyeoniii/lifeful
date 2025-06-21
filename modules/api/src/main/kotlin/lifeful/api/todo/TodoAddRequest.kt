@@ -1,8 +1,8 @@
 package lifeful.api.todo
 
 import io.swagger.v3.oas.annotations.media.Schema
-import jakarta.validation.constraints.Size
-import lifefule.todo.domain.Task
+import jakarta.validation.constraints.NotBlank
+import lifefule.todo.domain.Todo
 
 /**
  * lifeful.api.todo.TodoAddRequest
@@ -23,8 +23,14 @@ import lifefule.todo.domain.Task
  */
 @Schema(description = "할일 등록")
 data class TodoAddRequest(
-        val id :Int,
-        @field:Size(min = 1, message = "제목 빈값 안됨")
+        @field:NotBlank(message = "제목은 필수")
         val title :String,
-        val tasks: MutableList<Task> = mutableListOf()
-)
+        val tasks: List<TaskAddRequest>
+){
+        fun toDomain() : Todo {
+               return Todo (
+                       title = title,
+                       tasks = tasks.map { it.toDomain() },
+                       )
+        }
+}

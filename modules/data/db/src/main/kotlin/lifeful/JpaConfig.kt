@@ -8,12 +8,14 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
     basePackages = [
         "lifeful.book.data",
         "lifeful.review.data",
+        "lifeful.todo.data",
     ],
 )
 @EntityScan(
     basePackages = [
         "lifefule.book.domain",
         "lifefule.review.domain",
+        "lifefule.todo.domain",
     ],
 )
 @Configuration(proxyBeanMethods = false)

@@ -23,11 +23,11 @@ import lifefule.shared.BaseEntity
 @Entity
 class Task(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id :Int,
+        val id :Int = 0,
         val note :String,
         val level :String,
-        val isCompleted : Boolean,
+        val isCompleted : Boolean = false,
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "todo_id")
-        val todo: Todo
+        val todo: Todo? = null
 ) : BaseEntity()

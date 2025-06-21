@@ -2,6 +2,7 @@ package lifefule.todo.domain
 
 import jakarta.persistence.*
 import lifefule.shared.BaseEntity
+import lifefule.shared.TodoId
 
 /**
  * lifefule.todo.domain.Todo
@@ -22,9 +23,10 @@ import lifefule.shared.BaseEntity
  */
 @Entity
 class Todo(
+        //id는 자동채번이지 디폴트값이 필요
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id :Int,
+        val id : TodoId = TodoId(),
         val title :String,
-        @OneToMany(mappedBy = "todo", cascade = [CascadeType.ALL], orphanRemoval = true)
-        val tasks: MutableList<Task> = mutableListOf()
+        @OneToMany(mappedBy = "todo", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
+        val tasks: List<Task> = emptyList()
 ) : BaseEntity()
