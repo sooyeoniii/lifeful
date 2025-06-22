@@ -8,3 +8,4 @@ include(
     "modules:security",
     "modules:data:db",
 )
+include("client")
