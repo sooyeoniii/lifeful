@@ -1,6 +1,8 @@
 package lifeful.api.todo
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import io.swagger.v3.oas.annotations.media.Schema
+import lifefule.shared.TaskId
 import lifefule.todo.domain.Task
 import java.time.LocalDateTime
 
@@ -23,11 +25,13 @@ import java.time.LocalDateTime
  */
 @Schema(description = "할일 태스크 응답")
 data class TaskResponse(
-        val id: Int,
+        val id: TaskId,
         val note: String,
         val level: String,
         val isCompleted: Boolean,
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
         val createdAt: LocalDateTime,
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
         val modifiedAt: LocalDateTime
 ) {
         companion object {

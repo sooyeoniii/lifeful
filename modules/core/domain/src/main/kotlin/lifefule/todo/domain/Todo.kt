@@ -28,7 +28,7 @@ class Todo(
         val id : TodoId = TodoId(),
         val title :String,
         @OneToMany(mappedBy = "todo", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
-        val tasks: List<Task> = emptyList()
+        var tasks: MutableList<Task> = mutableListOf()
 ) : BaseEntity()
 //리포지토리에서 바로 join해서 가져옴
 //

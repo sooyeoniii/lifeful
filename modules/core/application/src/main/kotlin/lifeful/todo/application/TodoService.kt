@@ -1,9 +1,10 @@
 package lifeful.todo.application
 
 import lifefule.shared.TodoId
-import lifefule.todo.domain.InvalidTodoDataException
+import lifefule.todo.domain.Task
 import lifefule.todo.domain.Todo
 import lifefule.todo.domain.TodoRepository
+import lifefule.todo.domain.validate
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -14,19 +15,19 @@ class TodoService(
 ):AddTodo {
     override fun add(todo: Todo): TodoId {
         // 검증
-        if (todo.title.isBlank()) {
-            throw InvalidTodoDataException()
-        }
-
-//        https://www.purgomalum.com/service/containsprofanity?text=
-
+        todo.validate()
 
         todoRepository.addTodo(todo)
         return todo.id
+    }
+
+    fun add(task: Task) {
+       todoRepository.addTask(task)
     }
     
     @Transactional(readOnly = true)
     fun getTodos(): List<Todo> {
         return todoRepository.findAll()
     }
+
 }

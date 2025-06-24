@@ -2,6 +2,7 @@ package lifefule.todo.domain
 
 import jakarta.persistence.*
 import lifefule.shared.BaseEntity
+import lifefule.shared.TaskId
 
 /**
  * lifefule.todo.domain.Task
@@ -23,11 +24,12 @@ import lifefule.shared.BaseEntity
 @Entity
 class Task(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id :Int = 0,
+        val id :TaskId= TaskId(),
         val note :String,
         val level :String,
         val isCompleted : Boolean = false,
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "todo_id")
-        val todo: Todo? = null
+        var todo: Todo
+
 ) : BaseEntity()

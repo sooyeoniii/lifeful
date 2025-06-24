@@ -1,8 +1,8 @@
 package lifeful.api.todo
 
 import io.swagger.v3.oas.annotations.media.Schema
-import jakarta.validation.constraints.NotBlank
 import lifefule.todo.domain.Task
+import lifefule.todo.domain.Todo
 
 /**
  * lifeful.api.todo.TaskAddRequest
@@ -27,11 +27,12 @@ data class TaskAddRequest(
         val level: String,
         val isCompleted: Boolean = false
 ) {
-        fun toDomain(): Task {
-                return Task(
-                        note = note,
-                        level = level,
-                        isCompleted = isCompleted
-                )
-        }
+    fun toDomain(todo: Todo): Task {
+        return Task(
+            note = note,
+            level = level,
+            isCompleted = isCompleted,
+            todo = todo
+        )
+    }
 } 

@@ -30,7 +30,7 @@ data class TodoAddRequest(
         fun toDomain() : Todo {
                return Todo (
                        title = title,
-                       tasks = tasks.map { it.toDomain() },
-                       )
+                       tasks = mutableListOf()
+               )
         }
 }
