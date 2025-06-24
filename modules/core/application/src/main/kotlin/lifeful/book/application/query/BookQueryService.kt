@@ -1,6 +1,7 @@
 package lifeful.book.application.query
 
 import lifefule.book.domain.Book
+import lifefule.book.domain.BookClient
 import lifefule.book.domain.BookNotFoundException
 import lifefule.book.domain.BookRepository
 import lifefule.shared.BookId
@@ -15,7 +16,8 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 @Service
 class BookQueryService(
-    private val bookRepository: BookRepository,
+        private val bookRepository: BookRepository,
+        private val bookClient: BookClient,
 ) : FindBook {
     override fun all(): List<Book> {
         return bookRepository.findAll()
@@ -24,4 +26,9 @@ class BookQueryService(
     override fun findById(bookId: BookId): Book {
         return bookRepository.findById(bookId)?: throw BookNotFoundException("없더")
     }
+    
+    fun getBookFromExternalApi(isbn: String,title:String): Book? {
+        return bookClient.getBook(isbn, title)
+    }
+
 }

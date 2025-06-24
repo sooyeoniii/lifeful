@@ -8,6 +8,7 @@ dependencies {
     implementation("com.linecorp.kotlin-jdsl:jpql-dsl")
     implementation("com.linecorp.kotlin-jdsl:jpql-render")
     implementation("com.linecorp.kotlin-jdsl:spring-data-jpa-support")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
     runtimeOnly("com.h2database:h2")
 }
 

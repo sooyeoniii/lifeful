@@ -27,6 +27,8 @@ class Todo(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id : TodoId = TodoId(),
         val title :String,
-        @OneToMany(mappedBy = "todo", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
+        @OneToMany(mappedBy = "todo", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
         val tasks: List<Task> = emptyList()
 ) : BaseEntity()
+//리포지토리에서 바로 join해서 가져옴
+//

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Repository
 internal class TodoRdbRepository(
+        //feignclient도 지금 이 repository처럼 받아서 함
         private val jpaRepository : TodoJpaRepository
 ) : TodoRepository {
     @Transactional

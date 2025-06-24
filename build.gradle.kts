@@ -13,6 +13,13 @@ java {
     }
 }
 
+tasks.bootJar {
+    enabled = false
+}
+tasks.jar {
+    enabled = true
+}
+
 allprojects {
     group = "lifeful"
     version = "0.0.1"
@@ -46,6 +53,12 @@ subprojects {
                 useVersion(constraintVersion)
                 because("custom dependency group")
             }
+        }
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.cloud:spring-cloud-dependencies:2025.0.0")
         }
     }
 

@@ -13,7 +13,7 @@ class TodoService(
         private val todoRepository : TodoRepository,
 ):AddTodo {
     override fun add(todo: Todo): TodoId {
-        // 비즈니스 로직 검증
+        // 검증
         if (todo.title.isBlank()) {
             throw InvalidTodoDataException()
         }

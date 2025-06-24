@@ -21,3 +21,14 @@ spring:
 springdoc:
   swagger-ui:
     doc-expansion: none
+
+# FeignClient 설정
+external:
+  book:
+    api:
+      url: http://localhost:8081
+
+# FeignClient 로깅 설정
+logging:
+  level:
+    lifeful.book.client.BookFeignClient: DEBUG
