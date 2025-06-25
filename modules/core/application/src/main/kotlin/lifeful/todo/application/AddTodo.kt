@@ -9,4 +9,6 @@ interface AddTodo {
      * 할일 등록
      */
     fun add(todo: Todo) : TodoId
+    fun deleteTodo(todoId: TodoId): Unit
+
 }

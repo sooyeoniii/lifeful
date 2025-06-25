@@ -3,6 +3,7 @@ package lifeful.api.todo
 import jakarta.validation.Valid
 import lifeful.todo.application.TodoContentService
 import lifeful.todo.application.TodoService
+import lifefule.shared.TodoId
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.net.URI
@@ -34,6 +35,13 @@ class TodoRestController(
         todoService.add(todo)
         val location = URI.create("/todo/${todo.id.value}")
         return ResponseEntity.created(location).build()
+    }
+
+    @PostMapping("/delete/{todoId}")
+    override fun deleteTodo(@PathVariable todoId: TodoId): ResponseEntity<Unit> {
+        todoService.deleteTodo(todoId)
+        return ResponseEntity.ok().build()
+
     }
 
 }

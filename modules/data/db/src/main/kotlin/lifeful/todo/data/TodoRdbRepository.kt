@@ -32,4 +32,8 @@ internal class TodoRdbRepository(
     override fun findById(id: TodoId): Todo? {
         return jpaRepository.findById(id).orElse(null)
     }
+
+    override fun delete(todo: Todo): Unit {
+        return jpaRepository.delete(todo)
+    }
 }

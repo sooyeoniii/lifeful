@@ -27,6 +27,9 @@ external:
   book:
     api:
       url: http://localhost:8081
+  todo:
+    api:
+      url: https://www.purgomalum.com/service/containsprofanity
 
 # FeignClient 로깅 설정
 logging:

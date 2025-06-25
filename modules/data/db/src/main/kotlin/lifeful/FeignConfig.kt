@@ -1,8 +1,8 @@
-package lifeful.book.client
+package lifeful
 
 import org.springframework.cloud.openfeign.EnableFeignClients
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-@EnableFeignClients(basePackages = ["lifeful"])
+@EnableFeignClients
 class FeignConfig 

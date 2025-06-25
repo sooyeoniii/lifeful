@@ -2,6 +2,7 @@ package lifeful.api.todo
 
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
+import lifefule.shared.TodoId
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RequestBody
 
@@ -23,6 +24,14 @@ interface TodoApi {
     )
     fun addTodo(
             @RequestBody request: TodoAddRequest,
+    ): ResponseEntity<Unit>
+
+    @Operation(
+            summary = "할일 삭제",
+            operationId = "deleteTodo",
+    )
+    fun deleteTodo(
+            @RequestBody todoId: TodoId,
     ): ResponseEntity<Unit>
 
 }
