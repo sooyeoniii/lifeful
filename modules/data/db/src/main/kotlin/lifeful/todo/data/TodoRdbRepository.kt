@@ -9,10 +9,9 @@ import org.springframework.transaction.annotation.Transactional
 
 @Repository
 internal class TodoRdbRepository(
-        //feignclient도 지금 이 repository처럼 받아서 함
-        private val jpaRepository: TodoJpaRepository,
-        private val jpaTaskRepository: TaskJpaRepository
-
+    // feignclient도 지금 이 repository처럼 받아서 함
+    private val jpaRepository: TodoJpaRepository,
+    private val jpaTaskRepository: TaskJpaRepository,
 ) : TodoRepository {
     @Transactional
     override fun addTodo(todo: Todo) {

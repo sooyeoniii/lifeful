@@ -39,7 +39,7 @@ data class TaskResponse(
                         return TaskResponse(
                                 id = task.id,
                                 note = task.note,
-                                level = task.level,
+                                level = task.level.value,
                                 isCompleted = task.isCompleted,
                                 createdAt = task.createdAt,
                                 modifiedAt = task.modifiedAt

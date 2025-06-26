@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam
 @FeignClient(
     name = "book-client",
     url = "\${external.book.api.url:http://localhost:8081}",
-    configuration = [BookClientConfig::class]
+    configuration = [BookClientConfig::class],
 )
 interface BookFeignClient {
     /**
@@ -20,20 +20,25 @@ interface BookFeignClient {
      * @return 책 응답 DTO
      */
     @GetMapping("/books/{bookId}")
-    fun getBook(@PathVariable bookId: String): BookResponse
-    
+    fun getBook(
+        @PathVariable bookId: String,
+    ): BookResponse
+
     @GetMapping("/books/search")
-    fun searchBooks(@RequestParam query: String): List<BookResponse>
-    
+    fun searchBooks(
+        @RequestParam query: String,
+    ): List<BookResponse>
+
     @GetMapping("/books/isbn/{isbn}")
-    fun getBookByIsbn(@PathVariable isbn: String): BookResponse
+    fun getBookByIsbn(
+        @PathVariable isbn: String,
+    ): BookResponse
 }
 
 @Component
 class BookClientImpl(
-    private val bookFeignClient: BookFeignClient
+    private val bookFeignClient: BookFeignClient,
 ) : BookClient {
-    
     override fun getBook(bookId: String): Book? {
         return try {
             val response = bookFeignClient.getBook(bookId)
@@ -42,7 +47,7 @@ class BookClientImpl(
             null
         }
     }
-    
+
     override fun searchBooks(query: String): List<Book> {
         return try {
             val responses = bookFeignClient.searchBooks(query)
@@ -51,7 +56,7 @@ class BookClientImpl(
             emptyList()
         }
     }
-    
+
     override fun getBookByIsbn(isbn: String): Book? {
         return try {
             val response = bookFeignClient.getBookByIsbn(isbn)
@@ -68,7 +73,7 @@ data class BookResponse(
     val title: String,
     val description: String,
     val author: String,
-    val publisher: String
+    val publisher: String,
 ) {
     fun toDomain(): Book {
         return Book(
@@ -77,9 +82,7 @@ data class BookResponse(
             description = description,
             author = author,
             publisher = publisher,
-            id = lifefule.shared.BookId(id.toLong())
+            id = lifefule.shared.BookId(id.toLong()),
         )
     }
 }
-
-

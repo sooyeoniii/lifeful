@@ -1,8 +1,7 @@
 package lifeful.api.todo
 
 import io.swagger.v3.oas.annotations.media.Schema
-import lifefule.todo.domain.Task
-import lifefule.todo.domain.Todo
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * lifeful.api.todo.TaskAddRequest
@@ -25,14 +24,8 @@ import lifefule.todo.domain.Todo
 data class TaskAddRequest(
         val note: String,
         val level: String,
-        val isCompleted: Boolean = false
-) {
-    fun toDomain(todo: Todo): Task {
-        return Task(
-            note = note,
-            level = level,
-            isCompleted = isCompleted,
-            todo = todo
-        )
-    }
-} 
+        @get:JsonProperty("isCompleted")
+        val isCompleted: Boolean = false,
+        @get:JsonProperty("isDeleted")
+        val isDeleted: Boolean = false
+)

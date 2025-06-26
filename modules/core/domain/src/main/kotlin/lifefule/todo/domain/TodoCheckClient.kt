@@ -19,5 +19,5 @@ package lifefule.todo.domain
  */
 interface TodoCheckClient {
 
-    fun isProfane(text: String) :String
+    fun isProfane(text: String): Boolean
 }

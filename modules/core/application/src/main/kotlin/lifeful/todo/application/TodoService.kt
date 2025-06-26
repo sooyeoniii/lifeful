@@ -17,16 +17,14 @@ class TodoService(
     }
 
     @Transactional
+    //command->request
     override fun addTodoWithTasks(todo: TodoAddCommand): TodoId {
+        if (todoClient.isProfane(todo.title)) {
+            throw ProfanityDetectedException()
+        }
         // 1. todo 생성 및 검증
         val todos = todo.toDomain()
         //task도 저장한다고 여길 두번 타서 if 추가
-        if (todos.id.value == 0) {
-            todos.validate()
-            //require("false".equals(todoClient.isClean(todo.title))) {"비속어불가"}
-            //true:비속어O
-            todos.isClean("false" == todoClient.isProfane(todo.title))
-        }
 
         // 2. todo 저장 (id땜에)
         todoRepository.addTodo(todos)
@@ -44,6 +42,9 @@ class TodoService(
         todos.tasks = tasks.toMutableList()
         //task가 들어오는시점,,
         todos.maxSize()
+        if (tasks.size != MAX_TASK_SIZE) {
+            // 예외
+        }
 
         // 4. 다시 저장ㅠ,,(tasks 포함)
         todoRepository.addTodo(todos)
@@ -51,8 +52,9 @@ class TodoService(
         return todos.id
     }
 
+    fun add(todoId: TodoId, task: Task) {
 
-    fun add(task: Task) {
+        // todo id로 task 리스트를 조회한 후 사이즈 검증
         todoRepository.addTask(task)
     }
 
@@ -61,4 +63,7 @@ class TodoService(
         return todoRepository.delete(todo)
     }
 
+    companion object {
+        private const val MAX_TASK_SIZE = 10
+    }
 }

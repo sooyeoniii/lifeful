@@ -24,12 +24,18 @@ import lifefule.shared.TaskId
 @Entity
 class Task(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id :TaskId= TaskId(),
-        val note :String,
-        val level :String,
-        val isCompleted : Boolean = false,
+        val id: TaskId = TaskId(),
+        val note: String,
+        @Enumerated(EnumType.STRING)
+        val level: TaskLevel,
+        var isCompleted: Boolean = false,
+        var isDeleted: Boolean = false,
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "todo_id")
         var todo: Todo
 
-) : BaseEntity()
+) : BaseEntity() {
+    fun delete() {
+        this.isDeleted = true
+    }
+}

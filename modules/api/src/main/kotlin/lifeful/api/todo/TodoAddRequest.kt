@@ -3,6 +3,7 @@ package lifeful.api.todo
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
 import lifefule.todo.domain.Todo
+import com.fasterxml.jackson.annotation.JsonProperty
 
 /**
  * lifeful.api.todo.TodoAddRequest
@@ -24,13 +25,19 @@ import lifefule.todo.domain.Todo
 @Schema(description = "할일 등록")
 data class TodoAddRequest(
         @field:NotBlank(message = "제목은 필수")
-        val title :String,
+        val title: String,
+        @get:JsonProperty("isCompleted")
+        var isCompleted: Boolean,
+        @get:JsonProperty("isDeleted")
+        var isDeleted: Boolean,
         val tasks: List<TaskAddRequest>
-){
-        fun toDomain() : Todo {
-               return Todo (
-                       title = title,
-                       tasks = mutableListOf()
-               )
-        }
+) {
+    fun toDomain(): Todo {
+        return Todo(
+                title = title,
+                isCompleted = isCompleted,
+                isDeleted = isDeleted,
+                tasks = mutableListOf()
+        )
+    }
 }

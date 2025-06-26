@@ -6,6 +6,7 @@ import lifeful.todo.application.TaskAddCommand
 import lifeful.todo.application.TodoContentService
 import lifeful.todo.application.TodoService
 import lifefule.shared.TodoId
+import lifefule.todo.domain.TaskLevel
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.net.URI
@@ -22,15 +23,18 @@ class TodoRestController(
         return todos.map { TodoResponse.from(it) }
     }
 
-    @PostMapping("/todo")
+    @PostMapping("/todos")
     override fun addTodo(@Valid @RequestBody request: TodoAddRequest): ResponseEntity<Unit> {
         val command = TodoAddCommand(
                 title = request.title,
+                isCompleted = request.isCompleted,
+                isDeleted = request.isDeleted,
                 tasks = request.tasks.map { taskRequest ->
                     TaskAddCommand(
                             note = taskRequest.note,
-                            level = taskRequest.level,
-                            isCompleted = taskRequest.isCompleted
+                            level = TaskLevel.from(taskRequest.level),
+                            isCompleted = taskRequest.isCompleted,
+                            isDeleted = taskRequest.isDeleted,
                     )
                 }
         )

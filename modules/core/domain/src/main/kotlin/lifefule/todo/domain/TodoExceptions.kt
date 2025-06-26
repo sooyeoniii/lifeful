@@ -4,8 +4,10 @@ class InvalidTodoDataException() : RuntimeException()
 class ProfanityDetectedException() : RuntimeException()
 class TooManyDataException() : RuntimeException()
 
+//init에서 검증
 fun Todo.validate() {
     //require:false면 예외던짐
+    //표준예외 require
     require(title.isNotBlank()) { throw InvalidTodoDataException() }
 }
 

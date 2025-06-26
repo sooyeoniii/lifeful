@@ -27,17 +27,18 @@ data class TodoResponse(
         @field:Schema(description = "tasks")
         val tasks: List<TaskResponse>
 ) {
-        companion object {
-                fun from(todo: Todo): TodoResponse {
-                        return TodoResponse(
-                                id = todo.id.value,
-                                title = todo.title,
-                                //task의 isCompl이 전부 true여야 true
-                                allCompleted = todo.tasks.all { it.isCompleted },
-                                createdAt = todo.createdAt,
-                                modifiedAt = todo.modifiedAt,
-                                tasks = todo.tasks.map { TaskResponse.from(it) }
-                        )
-                }
+    companion object {
+        fun from(todo: Todo): TodoResponse {
+            return TodoResponse(
+                    id = todo.id.value,
+                    title = todo.title,
+                    //task의 isCompl이 전부 true여야 true
+                    //리소스 ,,과부하,,,,db에잇어야댐(통계)
+                    allCompleted = todo.tasks.all { it.isCompleted },
+                    createdAt = todo.createdAt,
+                    modifiedAt = todo.modifiedAt,
+                    tasks = todo.tasks.map { TaskResponse.from(it) }
+            )
         }
+    }
 }
