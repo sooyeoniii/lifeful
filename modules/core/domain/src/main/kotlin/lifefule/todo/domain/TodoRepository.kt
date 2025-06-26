@@ -12,5 +12,5 @@ interface TodoRepository {
     
     fun findById(id: TodoId): Todo?
 
-    fun delete(todo: Todo?) :Unit
+    fun delete(todo: Todo?)
 }

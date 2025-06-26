@@ -6,6 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestParam
 
 @FeignClient(
     name = "book-client",
@@ -20,15 +21,44 @@ interface BookFeignClient {
      */
     @GetMapping("/books/{bookId}")
     fun getBook(@PathVariable bookId: String): BookResponse
+    
+    @GetMapping("/books/search")
+    fun searchBooks(@RequestParam query: String): List<BookResponse>
+    
+    @GetMapping("/books/isbn/{isbn}")
+    fun getBookByIsbn(@PathVariable isbn: String): BookResponse
 }
 
 @Component
 class BookClientImpl(
     private val bookFeignClient: BookFeignClient
 ) : BookClient {
-
-    override fun getBook(isbn: String?, title: String?): Book? {
-        TODO("Not yet implemented")
+    
+    override fun getBook(bookId: String): Book? {
+        return try {
+            val response = bookFeignClient.getBook(bookId)
+            response.toDomain()
+        } catch (e: Exception) {
+            null
+        }
+    }
+    
+    override fun searchBooks(query: String): List<Book> {
+        return try {
+            val responses = bookFeignClient.searchBooks(query)
+            responses.map { it.toDomain() }
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+    
+    override fun getBookByIsbn(isbn: String): Book? {
+        return try {
+            val response = bookFeignClient.getBookByIsbn(isbn)
+            response.toDomain()
+        } catch (e: Exception) {
+            null
+        }
     }
 }
 

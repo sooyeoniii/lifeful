@@ -1,17 +1,20 @@
 package lifefule.todo.domain
 
 class InvalidTodoDataException() : RuntimeException()
+class ProfanityDetectedException() : RuntimeException()
+class TooManyDataException() : RuntimeException()
 
 fun Todo.validate() {
-    //false면 예외던짐
-    require(title.isNotBlank()) { throw InvalidTodoDataException()}
+    //require:false면 예외던짐
+    require(title.isNotBlank()) { throw InvalidTodoDataException() }
 }
 
 fun Todo.isClean(text: Boolean) {
-    require(text) {"비속어 불가"}
+    require(text) { throw ProfanityDetectedException() }
 }
 
 fun Todo.maxSize() {
-    require(tasks.size <= 10) {"최대 10개까지 등록 가능"}
+    println("=----------" + tasks.size)
+    require(tasks.size <= 10) { throw TooManyDataException() }
 }
 

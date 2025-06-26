@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional
 @Repository
 internal class TodoRdbRepository(
         //feignclient도 지금 이 repository처럼 받아서 함
-        private val jpaRepository : TodoJpaRepository,
-    private val jpaTaskRepository: TaskJpaRepository
+        private val jpaRepository: TodoJpaRepository,
+        private val jpaTaskRepository: TaskJpaRepository
 
 ) : TodoRepository {
     @Transactional
@@ -27,13 +27,13 @@ internal class TodoRdbRepository(
     override fun findAll(): List<Todo> {
         return jpaRepository.findAll()
     }
-    
+
     @Transactional(readOnly = true)
     override fun findById(id: TodoId): Todo? {
         return jpaRepository.findById(id).orElse(null)
     }
 
-    override fun delete(todo: Todo): Unit {
+    override fun delete(todo: Todo?) {
         return jpaRepository.delete(todo)
     }
 }

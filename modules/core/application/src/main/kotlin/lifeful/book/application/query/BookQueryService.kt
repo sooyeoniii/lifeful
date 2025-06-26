@@ -26,9 +26,5 @@ class BookQueryService(
     override fun findById(bookId: BookId): Book {
         return bookRepository.findById(bookId)?: throw BookNotFoundException("없더")
     }
-    
-    fun getBookFromExternalApi(isbn: String,title:String): Book? {
-        return bookClient.getBook(isbn, title)
-    }
 
 }
