@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody
 interface TodoApi {
 
     @Operation(
-            summary = "할일 목록 조회",
+            summary = "todo, task 전체 조회",
             operationId = "getTodos",
     )
     fun getTodos(): List<TodoResponse>
 
     @Operation(
-            summary = "할일 등록",
+            summary = "todo, task 등록",
             operationId = "addTodo",
     )
     fun addTodo(
@@ -27,7 +27,7 @@ interface TodoApi {
     ): ResponseEntity<Unit>
 
     @Operation(
-            summary = "할일 삭제",
+            summary = "todo 삭제(hard)",
             operationId = "deleteTodo",
     )
     fun deleteTodo(

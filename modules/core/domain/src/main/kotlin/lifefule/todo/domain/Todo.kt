@@ -28,8 +28,8 @@ class Todo(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: TodoId = TodoId(),
         val title: String,
-        var isCompleted: Boolean,
-        var isDeleted: Boolean,
+        var allCompleted: Boolean,
+        var allDeleted: Boolean,
         @OneToMany(mappedBy = "todo", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
         var tasks: MutableList<Task> = mutableListOf()
 ) : BaseEntity() {
@@ -45,14 +45,14 @@ class Todo(
         task.todo = this
 
         if (tasks.all { it.isCompleted }) {
-            this.isCompleted = true
+            this.allCompleted = true
         } else {
-            this.isCompleted = false
+            this.allCompleted = false
         }
     }
 
     fun delete() {
-        this.isDeleted = true
+        this.allDeleted = true
         tasks.forEach {
             it.delete()
         }

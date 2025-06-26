@@ -16,6 +16,9 @@ data class TodoResponse(
         @field:Schema(description = "완료여부")
         val allCompleted: Boolean,
 
+        @field:Schema(description = "삭제여부")
+        val allDeleted: Boolean,
+
         @field:Schema(description = "작성 날짜")
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
         val createdAt: LocalDateTime,
@@ -35,6 +38,7 @@ data class TodoResponse(
                     //task의 isCompl이 전부 true여야 true
                     //리소스 ,,과부하,,,,db에잇어야댐(통계)
                     allCompleted = todo.tasks.all { it.isCompleted },
+                allDeleted = todo.allDeleted,
                     createdAt = todo.createdAt,
                     modifiedAt = todo.modifiedAt,
                     tasks = todo.tasks.map { TaskResponse.from(it) }

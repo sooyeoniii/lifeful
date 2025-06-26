@@ -27,8 +27,8 @@ class TodoRestController(
     override fun addTodo(@Valid @RequestBody request: TodoAddRequest): ResponseEntity<Unit> {
         val command = TodoAddCommand(
                 title = request.title,
-                isCompleted = request.isCompleted,
-                isDeleted = request.isDeleted,
+                allCompleted = request.allCompleted,
+                allDeleted = request.allDeleted,
                 tasks = request.tasks.map { taskRequest ->
                     TaskAddCommand(
                             note = taskRequest.note,

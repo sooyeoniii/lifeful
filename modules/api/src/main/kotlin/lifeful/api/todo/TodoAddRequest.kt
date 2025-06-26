@@ -26,17 +26,15 @@ import com.fasterxml.jackson.annotation.JsonProperty
 data class TodoAddRequest(
         @field:NotBlank(message = "제목은 필수")
         val title: String,
-        @get:JsonProperty("isCompleted")
-        var isCompleted: Boolean,
-        @get:JsonProperty("isDeleted")
-        var isDeleted: Boolean,
+        val allCompleted: Boolean,
+        val allDeleted: Boolean,
         val tasks: List<TaskAddRequest>
 ) {
     fun toDomain(): Todo {
         return Todo(
                 title = title,
-                isCompleted = isCompleted,
-                isDeleted = isDeleted,
+            allCompleted = allCompleted,
+            allDeleted = allDeleted,
                 tasks = mutableListOf()
         )
     }
