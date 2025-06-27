@@ -35,8 +35,8 @@ class Todo(
 ) : BaseEntity() {
     init {
         //throw포함
-        require(title.isNotBlank()) { }
-        require(tasks.size <= 10)
+        require(title.isNotBlank()) { "제목 공백 안돼" }
+        require(tasks.size <= 10) { "task는 10개 까지" }
     }
 
     fun addTask(task: Task) {

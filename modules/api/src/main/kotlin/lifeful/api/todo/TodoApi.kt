@@ -34,4 +34,20 @@ interface TodoApi {
             @RequestBody todoId: TodoId,
     ): ResponseEntity<Unit>
 
+    @Operation(
+            summary = "todo 등록",
+            operationId = "addTodo(todo만 저장)",
+    )
+    fun addTodoWithoutTodo(
+            @RequestBody request: TodoAddRequest,
+    ): ResponseEntity<Unit>
+
+    @Operation(
+            summary = "task 등록",
+            operationId = "addTodo",
+    )
+    fun addTask(
+            @RequestBody request: TodoAddRequest,
+    ): ResponseEntity<Unit>
+
 }
