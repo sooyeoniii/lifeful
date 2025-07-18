@@ -10,5 +10,6 @@ interface AddTodo {
      */
     fun add(todo: Todo): TodoId
     fun addTodoWithTasks(todo: TodoAddCommand): TodoId
-
+    fun addTodo(request: TodoAddCommand)
+    fun addTask(todoId: TodoId, request: List<TaskAddCommand>)
 }

@@ -7,8 +7,8 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class TodoService(
-        private val todoRepository: TodoRepository,
-        private val todoClient: TodoCheckClient
+    private val todoRepository: TodoRepository,
+    private val todoClient: TodoCheckClient
 ) : AddTodo, DeleteTodo {
     @Transactional
     override fun add(todo: Todo): TodoId {
@@ -32,10 +32,10 @@ class TodoService(
         // 3. task 생성
         val tasks = todo.tasks.map { taskCommand ->
             Task(
-                    note = taskCommand.note,
-                    level = taskCommand.level,
-                    isCompleted = taskCommand.isCompleted,
-                    todo = todos
+                note = taskCommand.note,
+                level = taskCommand.level,
+                isCompleted = taskCommand.isCompleted,
+                todo = todos
             )
         }
 
@@ -52,11 +52,35 @@ class TodoService(
         return todos.id
     }
 
+    override fun addTodo(request: TodoAddCommand) {
+        if (request.tasks.isNotEmpty()) {
+            addTodoWithTasks(request)
+        } else {
+            todoRepository.addTodo(request.toDomain())
+        }
+    }
+
+    override fun addTask(todoId: TodoId, request: List<TaskAddCommand>) {
+        //to찾기
+        val todo = todoRepository.findById(todoId) ?: throw ClassNotFoundException("todo 없음")
+        request.map { taskCommand ->
+            val taskEntity = taskCommand.toDomain(todo)
+            //init
+            todo.addTask(taskEntity)
+            todoRepository.addTask(taskEntity)
+        }
+
+        //allcompleted, deleted 변했을 수 도 있어서...다시저장
+        todoRepository.addTodo(todo)
+
+    }
+
     fun add(todoId: TodoId, task: Task) {
 
         // todo id로 task 리스트를 조회한 후 사이즈 검증
         todoRepository.addTask(task)
     }
+
 
     override fun deleteTodo(todoId: TodoId) {
         val todo = todoRepository.findById(todoId)

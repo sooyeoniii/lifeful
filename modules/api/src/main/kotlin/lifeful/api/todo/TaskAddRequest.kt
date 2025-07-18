@@ -1,7 +1,7 @@
 package lifeful.api.todo
 
 import io.swagger.v3.oas.annotations.media.Schema
-import com.fasterxml.jackson.annotation.JsonProperty
+import lifefule.shared.TodoId
 
 /**
  * lifeful.api.todo.TaskAddRequest
@@ -22,10 +22,9 @@ import com.fasterxml.jackson.annotation.JsonProperty
  */
 @Schema(description = "할일 태스크 등록")
 data class TaskAddRequest(
-        val note: String,
-        val level: String,
-        @get:JsonProperty("isCompleted")
-        val isCompleted: Boolean = false,
-        @get:JsonProperty("isDeleted")
-        val isDeleted: Boolean = false
+    val todoId: TodoId,
+    val note: String,
+    val level: String,
+    val isCompleted: Boolean = false,
+    val isDeleted: Boolean = false
 )

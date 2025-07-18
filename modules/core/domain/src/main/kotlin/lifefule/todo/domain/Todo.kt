@@ -24,14 +24,14 @@ import lifefule.shared.TodoId
  */
 @Entity
 class Todo(
-        //id는 자동채번이지 디폴트값이 필요
-        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: TodoId = TodoId(),
-        val title: String,
-        var allCompleted: Boolean,
-        var allDeleted: Boolean,
-        @OneToMany(mappedBy = "todo", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
-        var tasks: MutableList<Task> = mutableListOf()
+    //id는 자동채번이지 디폴트값이 필요
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: TodoId = TodoId(),
+    val title: String,
+    var allCompleted: Boolean,
+    var allDeleted: Boolean,
+    @OneToMany(mappedBy = "todo", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
+    var tasks: MutableList<Task> = mutableListOf()
 ) : BaseEntity() {
     init {
         //throw포함
@@ -63,6 +63,3 @@ class Todo(
         find.delete()
     }
 }
-
-//리포지토리에서 바로 join해서 가져옴
-//init
