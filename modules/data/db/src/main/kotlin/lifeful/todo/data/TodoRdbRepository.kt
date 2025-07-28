@@ -1,11 +1,14 @@
 package lifeful.todo.data
 
+import com.linecorp.kotlinjdsl.querymodel.jpql.path.Paths.path
 import lifefule.todo.domain.Todo
 import lifefule.todo.domain.TodoRepository
 import lifefule.shared.TodoId
 import lifefule.todo.domain.Task
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
+import java.lang.ScopedValue.where
+import java.lang.reflect.Array.set
 
 @Repository
 internal class TodoRdbRepository(
@@ -35,4 +38,9 @@ internal class TodoRdbRepository(
     override fun delete(todo: Todo?) {
         return jpaRepository.delete(todo)
     }
+
+    override fun updateTodo(todo: Todo) {
+        jpaRepository.save(todo)
+    }
+
 }

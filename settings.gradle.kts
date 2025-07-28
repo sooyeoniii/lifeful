@@ -7,5 +7,6 @@ include(
     "modules:api",
     "modules:security",
     "modules:data:db",
+    "modules:support",
+    "modules:support:jdsl"
 )
-include("client")

@@ -7,9 +7,9 @@ import org.springframework.transaction.annotation.Transactional
 
 @Transactional(readOnly = false)
 @Service
-class TodoContentService(
-        private val todoRepository: TodoRepository
-) : FindTodo{
+class FindTodoService(
+    private val todoRepository: TodoRepository
+) : FindTodo {
     override fun all(): List<Todo> {
 
 //        if(todoRepository.findAll().isEmpty()){

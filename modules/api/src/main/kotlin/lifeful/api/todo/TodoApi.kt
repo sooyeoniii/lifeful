@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import lifeful.todo.application.TaskAddCommand
 import lifeful.todo.application.TodoAddCommand
+import lifefule.shared.TaskId
 import lifefule.shared.TodoId
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PathVariable
@@ -51,6 +52,25 @@ interface TodoApi {
     )
     fun addTask(
         @PathVariable todoId: TodoId,
+        @RequestBody request: List<TaskAddCommand>,
+    ): ResponseEntity<Unit>
+
+    @Operation(
+        summary = "todo 수정",
+        operationId = "updateTodo",
+    )
+    fun updateTodo(
+        @PathVariable todoId: TodoId,
+        @RequestBody request: TodoAddCommand,
+    ): ResponseEntity<Unit>
+
+    @Operation(
+        summary = "task 수정",
+        operationId = "updateTask",
+    )
+    fun updateTask(
+        @PathVariable todoId: TodoId,
+        @PathVariable taskId: TaskId,
         @RequestBody request: List<TaskAddCommand>,
     ): ResponseEntity<Unit>
 

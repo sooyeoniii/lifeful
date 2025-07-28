@@ -1,5 +1,6 @@
 package lifeful.todo.application
 
+import lifefule.shared.TodoId
 import lifefule.todo.domain.Task
 import lifefule.todo.domain.Todo
 import lifefule.todo.domain.TaskLevel
@@ -19,6 +20,15 @@ data class TodoAddCommand(
             allCompleted = allCompleted,
             allDeleted = allDeleted,
             tasks = mutableListOf()
+        )
+    }
+
+    fun toDomainOnlyTodo(todoId: TodoId): Todo {
+        return Todo(
+            id = todoId,
+            title = title,
+            allCompleted = allCompleted,
+            allDeleted = allDeleted
         )
     }
 }

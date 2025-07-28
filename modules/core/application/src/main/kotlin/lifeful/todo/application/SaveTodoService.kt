@@ -1,15 +1,18 @@
 package lifeful.todo.application
 
+import lifeful.todo.JdslRepository
+import lifefule.shared.TaskId
 import lifefule.shared.TodoId
 import lifefule.todo.domain.*
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class TodoService(
+class SaveTodoService(
+    private val jdslRepository: JdslRepository,
     private val todoRepository: TodoRepository,
     private val todoClient: TodoCheckClient
-) : AddTodo, DeleteTodo {
+) : AddTodo, UpdateTodo, DeleteTodo {
     @Transactional
     override fun add(todo: Todo): TodoId {
         todoRepository.addTodo(todo)
@@ -66,7 +69,7 @@ class TodoService(
         request.map { taskCommand ->
             val taskEntity = taskCommand.toDomain(todo)
             //init
-            todo.addTask(taskEntity)
+            todo.saveTask(taskEntity)
             todoRepository.addTask(taskEntity)
         }
 
@@ -85,6 +88,19 @@ class TodoService(
     override fun deleteTodo(todoId: TodoId) {
         val todo = todoRepository.findById(todoId)
         return todoRepository.delete(todo)
+    }
+
+    override fun updateTodo(todoId: TodoId, request: TodoAddCommand) {
+        //jdsl로 find
+        todoRepository.findById(todoId) ?: throw ClassNotFoundException("todo 없음")
+
+        //찾아온 todo를 request로 변경
+        todoRepository.updateTodo(request.toDomainOnlyTodo(todoId))
+
+    }
+
+    override fun updateTask(todoId: TodoId, taskId: TaskId, request: List<TaskAddCommand>) {
+        TODO("Not yet implemented")
     }
 
     companion object {

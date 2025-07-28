@@ -3,8 +3,9 @@ package lifeful.api.todo
 import jakarta.validation.Valid
 import lifeful.todo.application.TodoAddCommand
 import lifeful.todo.application.TaskAddCommand
-import lifeful.todo.application.TodoContentService
-import lifeful.todo.application.TodoService
+import lifeful.todo.application.FindTodoService
+import lifeful.todo.application.SaveTodoService
+import lifefule.shared.TaskId
 import lifefule.shared.TodoId
 import lifefule.todo.domain.TaskLevel
 import org.springframework.http.ResponseEntity
@@ -14,8 +15,8 @@ import java.net.URI
 @RequestMapping("/v1/todo")
 @RestController
 class TodoRestController(
-    private val todoService: TodoService,
-    private val findTodo: TodoContentService
+    private val saveTodo: SaveTodoService,
+    private val findTodo: FindTodoService
 ) : TodoApi {
     @GetMapping("/todos")
     override fun getTodos(): List<TodoResponse> {
@@ -23,7 +24,7 @@ class TodoRestController(
         return todos.map { TodoResponse.from(it) }
     }
 
-    @PostMapping("/todos")
+    @PostMapping("/todos/total")
     override fun addAllTodo(@Valid @RequestBody request: TodoAddRequest): ResponseEntity<Unit> {
         val command = TodoAddCommand(
             title = request.title,
@@ -38,26 +39,40 @@ class TodoRestController(
                 )
             }
         )
-        val id = todoService.addTodoWithTasks(command)
+        val id = saveTodo.addTodoWithTasks(command)
         val location = URI.create("/todo/${id.value}")
         return ResponseEntity.created(location).build()
     }
 
     @PostMapping("/delete/{todoId}")
     override fun deleteTodo(@PathVariable todoId: TodoId): ResponseEntity<Unit> {
-        todoService.deleteTodo(todoId)
+        saveTodo.deleteTodo(todoId)
         return ResponseEntity.ok().build()
     }
 
-    @PostMapping("/todos/test")
+    @PostMapping("/todos")
     override fun addTodo(request: TodoAddCommand): ResponseEntity<Unit> {
-        todoService.addTodo(request)
+        saveTodo.addTodo(request)
         return ResponseEntity.ok().build()
     }
 
     @PostMapping("/tasks/{todoId}")
     override fun addTask(@PathVariable todoId: TodoId, request: List<TaskAddCommand>): ResponseEntity<Unit> {
-        todoService.addTask(todoId, request)
+        saveTodo.addTask(todoId, request)
+        return ResponseEntity.ok().build()
+    }
+
+    override fun updateTodo(@PathVariable todoId: TodoId, request: TodoAddCommand): ResponseEntity<Unit> {
+        saveTodo.updatTodo(todoId, request)
+        return ResponseEntity.ok().build()
+    }
+
+    override fun updateTask(
+        @PathVariable todoId: TodoId,
+        @PathVariable taskId: TaskId,
+        request: List<TaskAddCommand>
+    ): ResponseEntity<Unit> {
+        saveTodo.updatTask(todoId, taskId, request)
         return ResponseEntity.ok().build()
     }
 

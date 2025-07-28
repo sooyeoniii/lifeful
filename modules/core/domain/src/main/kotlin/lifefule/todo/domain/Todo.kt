@@ -39,7 +39,7 @@ class Todo(
         require(tasks.size <= 10) { "task는 10개 까지" }
     }
 
-    fun addTask(task: Task) {
+    fun saveTask(task: Task) {
         require(tasks.size < 10)
         tasks.add(task)
         task.todo = this
