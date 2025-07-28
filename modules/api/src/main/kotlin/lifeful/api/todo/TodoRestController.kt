@@ -63,7 +63,7 @@ class TodoRestController(
     }
 
     override fun updateTodo(@PathVariable todoId: TodoId, request: TodoAddCommand): ResponseEntity<Unit> {
-        saveTodo.updatTodo(todoId, request)
+        saveTodo.updateTodo(todoId, request)
         return ResponseEntity.ok().build()
     }
 
@@ -72,7 +72,7 @@ class TodoRestController(
         @PathVariable taskId: TaskId,
         request: List<TaskAddCommand>
     ): ResponseEntity<Unit> {
-        saveTodo.updatTask(todoId, taskId, request)
+        saveTodo.updateTask(todoId, taskId, request)
         return ResponseEntity.ok().build()
     }
 
