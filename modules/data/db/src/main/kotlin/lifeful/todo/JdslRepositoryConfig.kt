@@ -5,7 +5,6 @@ import com.linecorp.kotlinjdsl.support.spring.data.jpa.repository.KotlinJdslJpql
 import jakarta.persistence.EntityManager
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Import
 
 /**
  * lifeful.jdsl.JdslRepositoryConfig
@@ -25,7 +24,6 @@ import org.springframework.context.annotation.Import
  * </pre>
  */
 @Configuration(proxyBeanMethods = false)
-@Import(JdslRepositoryConfig::class)
 internal class JdslRepositoryConfig(
     private val entityManager: EntityManager,
     private val renderContexts: List<RenderContext>,

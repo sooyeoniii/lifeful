@@ -62,6 +62,7 @@ class TodoRestController(
         return ResponseEntity.ok().build()
     }
 
+    @PostMapping("/todo/{todoId}")
     override fun updateTodo(@PathVariable todoId: TodoId, request: TodoAddCommand): ResponseEntity<Unit> {
         saveTodo.updateTodo(todoId, request)
         return ResponseEntity.ok().build()
